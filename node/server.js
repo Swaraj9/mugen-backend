@@ -22,14 +22,17 @@ app.post("/runmodel", (req, res) => {
 
   process.stdout.on("data", (data) => {
     filePath = __dirname + "/Result/" + data.toString() + ".midi";
+    console.log(filePath)
     fs.readFile(filePath, (err, data) => {
       if (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
       }
+      console.log("File Read")
       res.setHeader("Content-Type", "audio/midi");
       res.sendFile(filePath);
+      console.log("Response Sent")
       return;
     });
   });
