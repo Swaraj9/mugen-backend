@@ -13,34 +13,34 @@ app.get("/", (req, res) => {
 
 app.post("/runmodel", (req, res) => {
   const { amount, duration } = req.body.genInfo;
+  console.log(duration);
 
   const spawn = require("child_process").spawn;
   const process = spawn("python", [
     "../python/mugenPredict.py",
     parseInt(duration),
   ]);
+  console.log("process started")
+
+  process.stderr.on("data", (err) => {
+    console.log(err.toString());
+    res.status(400).json({ result: err.toString() });
+    return;
+  });
 
   process.stdout.on("data", (data) => {
+    console.log(data.toString());
     filePath = __dirname + "/Result/" + data.toString() + ".midi";
-    console.log(filePath)
     fs.readFile(filePath, (err, data) => {
       if (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
         return;
       }
-      console.log("File Read")
       res.setHeader("Content-Type", "audio/midi");
       res.sendFile(filePath);
-      console.log("Response Sent")
       return;
     });
-  });
-
-  process.stderr.on("data", (err) => {
-    console.log(err.toString());
-    res.status(400).json({ result: err.toString() });
-    return;
   });
 });
 
