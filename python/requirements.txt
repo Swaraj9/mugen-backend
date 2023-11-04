@@ -1,6 +1,6 @@
 torch
 music21
-glob
+glob2
 numpy
 os
 uuid
