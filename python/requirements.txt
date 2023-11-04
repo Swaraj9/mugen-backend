@@ -2,6 +2,5 @@ torch
 music21
 glob2
 numpy
-os
 uuid
 sys
