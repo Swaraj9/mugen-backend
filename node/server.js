@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/runmodel", (req, res) => {
-  const { amount, duration } = req.body.genInfo;
+  const { duration } = req.body.genInfo;
   console.log(duration);
 
   const spawn = require("child_process").spawn;
@@ -22,11 +22,11 @@ app.post("/runmodel", (req, res) => {
   ]);
   console.log("process started")
 
-  process.stderr.on("data", (err) => {
-    console.log(err.toString());
-    res.status(400).json({ result: err.toString() });
-    return;
-  });
+  // process.stderr.on("data", (err) => {
+  //   console.log(err.toString());
+  //   res.status(400).json({ result: err.toString() });
+  //   return;
+  // });
 
   process.stdout.on("data", (data) => {
     console.log(data.toString());
