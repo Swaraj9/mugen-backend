@@ -12,13 +12,15 @@ app.get("/", (req, res) => {
 });
 
 app.post("/runmodel", (req, res) => {
-  const { duration } = req.body.genInfo;
+  const { duration,genre } = req.body.genInfo;
   console.log(duration);
+  console.log(genre);
 
   const spawn = require("child_process").spawn;
   const process = spawn("python", [
     "../python/mugenPredict.py",
     parseInt(duration),
+    parseInt(genre),
   ]);
   console.log("process started")
 

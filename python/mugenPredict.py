@@ -7,7 +7,8 @@ import os
 import uuid
 import sys
 
-duration = sys.argv[0]
+duration = int(sys.argv[1])
+genre = int(sys.argv[2])
 
 def loadMidiFile(file):
     return music21.converter.parse(file)
@@ -78,8 +79,14 @@ class MIDI():
 
         return self.trainseq
     
-midi = MIDI(seq_length=duration*10, transpose=True)
-midi.parser("../python/bach")
+midi = MIDI(seq_length=duration, transpose=True)
+if genre==0:
+    midi.parser("../python/bach")
+elif genre==1:
+    midi.parser("../python/lofi")
+elif genre==2:
+    midi.parser("../python/jazz")
+
     
 def generate(name, generator):
     # random noise for network input
